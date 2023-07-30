@@ -1,0 +1,36 @@
+syntax = "proto3"; //声明版本
+package fixbug; //声明代码所在的包（namespace）
+option cc_generic_services = true;
+
+//定义登陆请求消息类型 name pwd
+message LoginRequest {
+    bytes name = 1;
+    bytes pwd = 2;
+}
+
+
+message RegRequest {
+    bytes name = 1;
+    bytes pwd = 2;
+    int32 age = 3;
+
+    enum SEX {
+        MAN = 0;
+        WOMAN = 1;
+    }
+    SEX sex = 4;
+    string phone = 5;
+}
+
+//定义登录响应消息类型
+message Response {
+    int32 errorno = 1;
+    bytes errormsg = 2;
+    bool result = 3;
+}
+
+// 定义RPC服务接口类和服务方法
+service UserServiceRpc{
+    rpc login(LoginRequest) returns (Response);
+    rpc reg(RegRequest) returns (Response);
+}
